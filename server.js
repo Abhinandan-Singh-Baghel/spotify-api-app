@@ -18,13 +18,16 @@ const path = require('path');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// Serve static files from the 'public' directory
-app.use(express.static(path.join(__dirname, 'public')));
-
-
 app.use(bodyParser.urlencoded({
     extended: true
   }));
+
+// Serve static files from the 'public' directory
+//app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static("public"));
+
+
+
 
 
 
@@ -34,7 +37,7 @@ app.use(bodyParser.urlencoded({
 app.get('/recommendations', async (req, res) => {
   
   const { genre, mood } = req.query;
-  const accessToken = 'BQDBA_AdDkynygaWqtCU162Zbmhw3irnyifUEmufvP573lD1BS8VHeBUB69apS_KEThtq33VKWlfSXFF9USrbp7OgL-XA5LZusHgokFmO7lrwttGGHY'; // Get the access token from the authentication step or handle token refreshing
+  const accessToken = 'BQAeFRKyKBxIoOWoIVIIcj7wPAvouN8gjSZmIWcUkh_xlSxN5jU9KEfjqdPfnqcU1hwaxmIpDY2NqojYmcK88ov02ZvGeqBwdfeI30N8QDVEVWYEp30'; // Get the access token from the authentication step or handle token refreshing
   try {
     const response = await axios.get('https://api.spotify.com/v1/artists/1uNFoZAHBGtllmzznpCI3s', {
     
@@ -50,7 +53,7 @@ app.get('/recommendations', async (req, res) => {
     recommendations: recommendationstion
   });
     
-    res.json(recommendations);
+    // res.json(recommendations);
   } catch (error) {
     console.error('Error fetching recommendations:', error);
     res.status(500).json({ error: 'Unable to fetch recommendations' });

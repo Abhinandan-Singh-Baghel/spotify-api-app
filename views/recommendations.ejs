@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/public/styles.css">
+  <link rel="stylesheet" href="css/styles.css">
   <title>Music Recommendations</title>
   <style>
  
@@ -12,6 +12,11 @@
 </head>
 <body>
   <h1>Music Recommendations</h1>
+
+  <%= console.log(recommendations)%>
+
+  
+  <img src= <%= recommendations.images[0].url    %>    > 
 
 </body>
 </html>
