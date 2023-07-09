@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <title>Spotify Playlist</title>
+
+<script>
+   
+   /* Add your custom CSS styles here */
+
+
+
+
+
+
+
+
+/* Add more custom styles as needed */
+
+
+
+
+</script>
+
+  <!-- Add your CSS stylesheets and other necessary scripts here -->
+</head>
+<body>
+  <h1>Spotify Playlist</h1>
+
+  <h2>Playlist Information</h2>
+  <ul>
+    <li><strong>Playlist Name:</strong> <%= playlist.name %></li>
+    <li><strong>Playlist ID:</strong> <%= playlist.id %></li>
+    <li><strong>Number of Tracks:</strong> <%= playlist.tracks.total %></li>
+    <!-- Add more playlist details here as per your requirements -->
+  </ul>
+
+  <h2>Playlist Tracks</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Artist</th>
+        <th>Album</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% playlistTracks.forEach((track) => { %>
+        <tr>
+          <td><%= track.name %></td>
+          <td><%= track.artist %></td>
+          <td><%= track.album %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+
+  <!-- Add a form to add tracks to the playlist -->
+  <h2>Add Tracks to Playlist</h2>
+  <form method="post" action="/add-tracks/<%= playlist.id %>">
+    <!-- Add input fields and submit button here to add tracks -->
+  </form>
+
+  <!-- Add a form to replace tracks in the playlist -->
+  <h2>Replace Tracks in Playlist</h2>
+  <form method="post" action="/replace-tracks/<%= playlist.id %>">
+    <!-- Add input fields and submit button here to replace tracks -->
+  </form>
+
+  <!-- Add your additional HTML elements and scripts as needed -->
+</body>
+</html>

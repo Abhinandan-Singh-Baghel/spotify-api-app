@@ -108,13 +108,13 @@ app.get('/callback', async (req, res) => {
 // Step 3: Retrieve music recommendations
 
 
-app.get('/recommendations', async (req, res) => {
+app.get('/alltheplaylist', async (req, res) => {
   
  // const { genre, mood } = req.query;
   const accessToken = access_tokenamazing ; // Get the access token from the authentication step or handle token refreshing
   console.log(accessToken);
   try {
-    const response = await axios.get('https://api.spotify.com/v1/artists/1uNFoZAHBGtllmzznpCI3s', {
+    const response = await axios.get('https://api.spotify.com/v1/playlists/0CYz3zJcoPaqQBuvx3iUB2', {
     
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -124,8 +124,9 @@ app.get('/recommendations', async (req, res) => {
    // const imageofjb = recommendations[0].url;
    // res.send("<img src = ${imageofjb}>");
 
-   res.render("recommendations", {
-    recommendations: recommendationstion
+   res.render("playlist", {
+    playlist: recommendationstion,
+    playlistTracks : recommendationstion.tracks.items
   });
     
     // res.json(recommendations);
