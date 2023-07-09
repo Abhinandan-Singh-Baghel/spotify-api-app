@@ -5,9 +5,13 @@ const bodyParser = require("body-parser");
 const axios = require('axios');
 const querystring = require('querystring');
 const app = express();
+const SpotifyWebApi = require('spotify-web-api-node');
+require('dotenv').config();
+
 
 
 const path = require('path');
+const { access } = require('fs');
 
 
 
@@ -31,13 +35,84 @@ app.use(express.static("public"));
 
 
 
-// Step 1: Retrieve music recommendations
+
+
+
+
+const clientId = process.env.CLIENT_ID;
+
+const clientSecret = process.env.CLIENT_SECRET;
+
+
+const redirectUri = 'http://localhost:3000/callback'; // Set the redirect URI
+
+
+// note this is very important this redirectUri should be exactly same as the redirect URI in the spotify developer dashboard of yours otherwise this just won't work . 
+
+const spotifyApi = new SpotifyWebApi({
+  clientId,
+  clientSecret,
+  redirectUri,
+});
+
+var access_tokenamazing ;
+var access_tokenrefresh ;
+
+
+
+
+
+
+
+
+// Step 1: Obtain authorization from the user
+
+
+
+app.get('/login', (req, res) => {
+  const scopes = ['user-read-private', 'user-read-email' ,  'user-library-read' , 'user-library-modify']; // Set the required scopes
+  const authorizeURL = spotifyApi.createAuthorizeURL(scopes);
+  res.redirect(authorizeURL);
+});
+
+// Step 2: Handle the callback after authorization
+
+
+
+app.get('/callback', async (req, res) => {
+  const { code } = req.query;
+  try {
+    const data = await spotifyApi.authorizationCodeGrant(code);
+    const { access_token, refresh_token } = data.body;
+    // Use the access_token to make further requests to the Spotify API
+    // Store the refresh_token securely for future token refreshes
+    spotifyApi.setAccessToken(access_token);
+    spotifyApi.setRefreshToken(refresh_token);
+    
+    
+    access_tokenamazing = access_token;
+    access_tokenrefresh = refresh_token;
+
+
+    console.log(access_tokenamazing);
+    res.json({ access_token, refresh_token });
+  } catch (error) {
+    console.error('Error authenticating with Spotify:', error);
+    res.status(500).json({ error: 'Unable to authenticate with Spotify' });
+  }
+});
+
+
+
+
+// Step 3: Retrieve music recommendations
 
 
 app.get('/recommendations', async (req, res) => {
   
-  const { genre, mood } = req.query;
-  const accessToken = 'BQAeFRKyKBxIoOWoIVIIcj7wPAvouN8gjSZmIWcUkh_xlSxN5jU9KEfjqdPfnqcU1hwaxmIpDY2NqojYmcK88ov02ZvGeqBwdfeI30N8QDVEVWYEp30'; // Get the access token from the authentication step or handle token refreshing
+ // const { genre, mood } = req.query;
+  const accessToken = access_tokenamazing ; // Get the access token from the authentication step or handle token refreshing
+  console.log(accessToken);
   try {
     const response = await axios.get('https://api.spotify.com/v1/artists/1uNFoZAHBGtllmzznpCI3s', {
     
@@ -59,6 +134,11 @@ app.get('/recommendations', async (req, res) => {
     res.status(500).json({ error: 'Unable to fetch recommendations' });
   }
 });
+
+
+
+
+
 
 
 
