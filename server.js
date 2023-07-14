@@ -70,7 +70,7 @@ var access_tokenrefresh ;
 
 
 app.get('/login', (req, res) => {
-  const scopes = ['user-read-private', 'user-read-email' ,  'user-library-read' , 'user-library-modify']; // Set the required scopes
+  const scopes = ['user-read-private', 'user-read-email' ,  'user-library-read' , 'user-library-modify', 'playlist-modify-public', 'playlist-modify-private']; // Set the required scopes
   const authorizeURL = spotifyApi.createAuthorizeURL(scopes);
   res.redirect(authorizeURL);
 });
@@ -105,16 +105,30 @@ app.get('/callback', async (req, res) => {
 
 
 
+
+
+
+// use refresh token to generate new access token without having to re-authenticate every single time
+
+// Use the refresh token to obtain a new access token
+
+
+
+
+
+
+
+
 // Step 3: Retrieve music recommendations
 
 
 app.get('/alltheplaylist', async (req, res) => {
   
  // const { genre, mood } = req.query;
-  const accessToken = access_tokenamazing ; // Get the access token from the authentication step or handle token refreshing
+  const accessToken =  access_tokenamazing ; // Get the access token from the authentication step or handle token refreshing
   console.log(accessToken);
   try {
-    const response = await axios.get('https://api.spotify.com/v1/playlists/0CYz3zJcoPaqQBuvx3iUB2', {
+    const response = await axios.get('https://api.spotify.com/v1/playlists/2AZi5m2iY3kQMqzCFOa00i', {
     
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -137,6 +151,76 @@ app.get('/alltheplaylist', async (req, res) => {
 });
 
 
+
+
+
+// Route to add tracks to a specific playlist 
+app.post('/add-tracks/:playlist_id', async (req, res) => {
+  try {
+    const playlistId = req.params.playlist_id;
+    const trackName = req.body.trackName;
+    const artistName = req.body.artistName;
+    const albumName = req.body.albumName;
+
+    // Perform the necessary operations to add the track to the playlist
+
+
+  
+      
+      spotifyApi.addTracksToPlaylist(
+        playlistId ,    // this is the playlist that you are adding tracks to
+        [
+          'spotify:track:trackName'
+          
+        ],
+        {
+          position: 1  // the position at which this track will be added in the playlist , don't mess up otherwise you will get out of bound error
+        }
+      ).then(function(data) {
+        console.log('Added tracks to the playlist!');
+      })
+      .catch(function(err) {
+        console.log('Something went wrong:', err.message);
+      });
+
+   
+
+
+
+
+
+
+
+
+    // Use the Spotify API or any other appropriate methods here
+
+    res.redirect('/alltheplaylist'); // Redirect to the page displaying Spotify data after adding the track
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error adding tracks to the playlist');
+  }
+});
+
+// Route to replace tracks in a specific playlist
+app.post('/replace-tracks/:playlist_id', async (req, res) => {
+  try {
+    const playlistId = req.params.playlist_id;
+    const trackName1 = req.body.trackName1;
+    const artistName1 = req.body.artistName1;
+    const albumName1 = req.body.albumName1;
+    const trackName2 = req.body.trackName2;
+    const artistName2 = req.body.artistName2;
+    const albumName2 = req.body.albumName2;
+
+    // Perform the necessary operations to replace the tracks in the playlist
+    // Use the Spotify API or any other appropriate methods here
+
+    res.redirect('/spotify-data'); // Redirect to the page displaying Spotify data after replacing the tracks
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error replacing tracks in the playlist');
+  }
+});
 
 
 

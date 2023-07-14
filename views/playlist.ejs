@@ -49,24 +49,43 @@
       <% playlistTracks.forEach((track) => { %>
         <tr>
           <td><%= track.track.name %></td>
-          <td><%= track.track.album.artists.name %></td>
+          <td><%= track.track.album.artists[0].name %></td>
           <td><%= track.track.album.name %></td>
         </tr>
       <% }) %>
     </tbody>
   </table>
 
-  <!-- Add a form to add tracks to the playlist -->
-  <h2>Add Tracks to Playlist</h2>
-  <form method="post" action="/add-tracks/<%= playlist.id %>">
-    <!-- Add input fields and submit button here to add tracks -->
-  </form>
 
-  <!-- Add a form to replace tracks in the playlist -->
-  <h2>Replace Tracks in Playlist</h2>
-  <form method="post" action="/replace-tracks/<%= playlist.id %>">
-    <!-- Add input fields and submit button here to replace tracks -->
-  </form>
+  
+
+<!-- Add a form to add tracks to the playlist -->
+<h2>Add Tracks to Playlist</h2>
+<form method="post" action="/add-tracks/<%= playlist.id %>">
+  <input type="text" name="trackName" placeholder="Track Name" required>
+  <input type="text" name="artistName" placeholder="Artist Name" required>
+  <input type="text" name="albumName" placeholder="Album Name" required>
+  <button type="submit">Add Track</button>
+</form>
+
+<!-- Add a form to replace tracks in the playlist -->
+<h2>Replace Tracks in Playlist</h2>
+<form method="post" action="/replace-tracks/<%= playlist.id %>">
+  <input type="text" name="trackName1" placeholder="Track Name 1" required>
+  <input type="text" name="artistName1" placeholder="Artist Name 1" required>
+  <input type="text" name="albumName1" placeholder="Album Name 1" required>
+  <input type="text" name="trackName2" placeholder="Track Name 2" required>
+  <input type="text" name="artistName2" placeholder="Artist Name 2" required>
+  <input type="text" name="albumName2" placeholder="Album Name 2" required>
+  <!-- Add more input fields for additional tracks as needed -->
+  <button type="submit">Replace Tracks</button>
+</form>
+
+
+
+
+
+
 
   <!-- Add your additional HTML elements and scripts as needed -->
 </body>
