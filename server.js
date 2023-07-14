@@ -158,19 +158,18 @@ app.get('/alltheplaylist', async (req, res) => {
 app.post('/add-tracks/:playlist_id', async (req, res) => {
   try {
     const playlistId = req.params.playlist_id;
-    const trackName = req.body.trackName;
+    const trackName = req.body.trackName;  //trackName should actually be Spotify ID of the track 
     const artistName = req.body.artistName;
     const albumName = req.body.albumName;
 
     // Perform the necessary operations to add the track to the playlist
 
 
-  
-      
+   
       spotifyApi.addTracksToPlaylist(
         playlistId ,    // this is the playlist that you are adding tracks to
         [
-          'spotify:track:trackName'
+          'spotify:track:7MXVkk9YMctZqd1Srtv4MB'  // right now i'm just testing whether the function below works or not so I have added random track 7MXVkk9YMctZqd1Srtv4MB 
           
         ],
         {
