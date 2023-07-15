@@ -158,20 +158,42 @@ app.get('/alltheplaylist', async (req, res) => {
 app.post('/add-tracks/:playlist_id', async (req, res) => {
   try {
     const playlistId = req.params.playlist_id;
-    const trackName = req.body.trackName;  //trackName should actually be Spotify ID of the track 
+    const trackName = req.body.trackName;  
     const artistName = req.body.artistName;
     const albumName = req.body.albumName;
 
     // Perform the necessary operations to add the track to the playlist
 
 
+    const searchResults = await spotifyApi.searchTracks(
+      `track:${trackName} artist:${artistName} album:${albumName}`
+    );
+
+
+    console.log(searchResults);
+
+    // Extract the track ID from the search results
+    
+    const trackID = searchResults.body.tracks.items[0]?.id; // Use optional chaining to handle cases where trackID is undefined or null
+
+  
+
+    if (!trackID) {
+      throw new Error('No track ID found.'); // Throw an error if trackID is not available
+    }
+
+
+
+
+
+
    
       spotifyApi.addTracksToPlaylist(
         playlistId ,    // this is the playlist that you are adding tracks to
-        [
-          'spotify:track:7MXVkk9YMctZqd1Srtv4MB'  // right now i'm just testing whether the function below works or not so I have added random track 7MXVkk9YMctZqd1Srtv4MB 
-          
-        ],
+        
+       [ 'spotify:track:'+ trackID]
+
+        ,
         {
           position: 1  // the position at which this track will be added in the playlist , don't mess up otherwise you will get out of bound error
         }
@@ -214,7 +236,7 @@ app.post('/replace-tracks/:playlist_id', async (req, res) => {
     // Perform the necessary operations to replace the tracks in the playlist
     // Use the Spotify API or any other appropriate methods here
 
-    res.redirect('/spotify-data'); // Redirect to the page displaying Spotify data after replacing the tracks
+    res.redirect('/alltheplaylist'); // Redirect to the page displaying Spotify data after replacing the tracks
   } catch (error) {
     console.error(error);
     res.status(500).send('Error replacing tracks in the playlist');
