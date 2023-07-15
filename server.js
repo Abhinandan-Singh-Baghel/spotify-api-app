@@ -19,6 +19,8 @@ const { access } = require('fs');
 // Set 'views' directory and view engine
 // hi its me.
 //hi its me from new-branch
+//yo
+
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -58,6 +60,7 @@ const spotifyApi = new SpotifyWebApi({
 
 var access_tokenamazing ;
 var access_tokenrefresh ;
+var spotifyiduser ;
 
 
 
@@ -96,7 +99,8 @@ app.get('/callback', async (req, res) => {
 
 
     console.log(access_tokenamazing);
-    res.json({ access_token, refresh_token });
+    //res.json({ access_token, refresh_token });
+    res.redirect('/alltheplaylist');
   } catch (error) {
     console.error('Error authenticating with Spotify:', error);
     res.status(500).json({ error: 'Unable to authenticate with Spotify' });
@@ -115,12 +119,20 @@ app.get('/callback', async (req, res) => {
 
 
 
+//Step 3: Take playlist Id from the user
+
+app.get('/enterPlaylist', (req, res) => {
+
+
+  res.render("enterpage");
+
+
+});
 
 
 
 
-
-// Step 3: Retrieve music recommendations
+// Step 4: Retrieve music recommendations
 
 
 app.get('/alltheplaylist', async (req, res) => {
@@ -129,7 +141,7 @@ app.get('/alltheplaylist', async (req, res) => {
   const accessToken =  access_tokenamazing ; // Get the access token from the authentication step or handle token refreshing
   console.log(accessToken);
   try {
-    const response = await axios.get('https://api.spotify.com/v1/playlists/2AZi5m2iY3kQMqzCFOa00i', {
+    const response = await axios.get('https://api.spotify.com/v1/playlists/'+spotifyiduser, {
     
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -150,6 +162,33 @@ app.get('/alltheplaylist', async (req, res) => {
     res.status(500).json({ error: 'Unable to fetch recommendations' });
   }
 });
+
+
+
+
+//Route to recieve the spotify ID provided by user on the backend code
+
+app.post('/enterthespotifyid', (req, res)=>{
+
+spotifyiduser = req.body.playlistID;
+
+res.redirect('/login');
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
