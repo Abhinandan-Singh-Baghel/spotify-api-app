@@ -99,7 +99,8 @@ app.get('/callback', async (req, res) => {
 
 
     console.log(access_tokenamazing);
-    res.json({ access_token, refresh_token });
+    //res.json({ access_token, refresh_token });
+    res.redirect('/alltheplaylist');
   } catch (error) {
     console.error('Error authenticating with Spotify:', error);
     res.status(500).json({ error: 'Unable to authenticate with Spotify' });
@@ -171,7 +172,7 @@ app.post('/enterthespotifyid', (req, res)=>{
 
 spotifyiduser = req.body.playlistID;
 
-res.redirect('/alltheplaylist');
+res.redirect('/login');
 
 });
 
