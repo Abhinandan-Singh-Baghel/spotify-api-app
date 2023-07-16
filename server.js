@@ -262,6 +262,11 @@ app.post('/add-tracks/:playlist_id', async (req, res) => {
   }
 });
 
+
+
+
+
+
 // Route to replace tracks in a specific playlist
 app.post('/replace-tracks/:playlist_id', async (req, res) => {
   try {
@@ -275,6 +280,56 @@ app.post('/replace-tracks/:playlist_id', async (req, res) => {
 
     // Perform the necessary operations to replace the tracks in the playlist
     // Use the Spotify API or any other appropriate methods here
+
+   
+    
+    const searchResults1 = await spotifyApi.searchTracks(
+      `track:${trackName1} artist:${artistName1} album:${albumName1}`
+    );
+
+
+    // Extract the track ID from the search results
+    
+    const trackID1 = searchResults1.body.tracks.items[0]?.id; // Use optional chaining to handle cases where trackID is undefined or null
+
+  
+
+    const searchResults2 = await spotifyApi.searchTracks(
+      `track:${trackName2} artist:${artistName2} album:${albumName2}`
+    );
+
+
+
+
+    // Extract the track ID from the search results
+    
+    const trackID2 = searchResults2.body.tracks.items[0]?.id; // Use optional chaining to handle cases where trackID is undefined or null
+
+
+
+    
+
+
+spotifyApi.replaceTracksInPlaylist(playlistId, 
+  
+  ['spotify:track:' + trackID1 , 'spotify:track:' + trackID2 ]
+  
+  )
+  .then(() => {
+    console.log('Tracks replaced in the playlist successfully!');
+  })
+  .catch((error) => {
+    console.log('An error occurred while replacing tracks:', error);
+  });
+
+
+
+   
+
+
+
+
+
 
     res.redirect('/alltheplaylist'); // Redirect to the page displaying Spotify data after replacing the tracks
   } catch (error) {
