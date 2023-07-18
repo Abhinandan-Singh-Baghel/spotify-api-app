@@ -1,0 +1,139 @@
+ /* Reset default styles */
+ body, h1, h2, h3, h4, p, ul, li {
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Global styles */
+  
+  
+  header {
+    background-color: #333;
+    padding: 20px;
+    color: #fff;
+  }
+  
+  header h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  nav ul {
+    list-style-type: none;
+  }
+  
+  nav ul li {
+    display: inline;
+    margin-right: 10px;
+  }
+  
+  nav ul li a {
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  main {
+    padding: 20px;
+  }
+  
+  .hero {
+    text-align: center;
+    margin-bottom: 100px;
+  }
+  
+  .hero h2 {
+    font-size: 32px;
+    margin-bottom: 10px;
+  }
+  
+  .btn {
+    display: inline-block;
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 4px;
+  }
+  
+  .featured-playlists {
+    margin-bottom: 30px;
+  }
+  
+  .featured-playlists h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .playlist {
+    display: inline-block;
+    width: 300px;
+    margin-right: 50px;
+  }
+  
+  .playlist img {
+    width: 100%;
+    height: 250px;
+    margin-bottom: 10px;
+  }
+  
+  .playlist h4 {
+    font-size: 18px;
+    margin-bottom: 5px;
+  }
+    
+  footer {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+  }
+  
+
+  form {
+    max-width: 400px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  
+  
+  label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #cccccc;
+  }
+
+  input[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  input[type="submit"]:hover {
+    background-color: #45a049;
+  }
+ 
+
+  .mid{
+ 
+    text-align: center;
+    padding-bottom: 50px;
+
+  }
